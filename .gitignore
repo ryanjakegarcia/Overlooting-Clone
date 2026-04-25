@@ -1,0 +1,9 @@
+# Godot 4 generated files
+.godot/
+*.translation
+export_presets.cfg
+
+# Mono/C# (unused but present in Mono builds)
+.mono/
+data_*/
+mono_crash.*.json

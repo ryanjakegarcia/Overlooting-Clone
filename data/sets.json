@@ -1,0 +1,57 @@
+[
+  {
+    "id": "beast",
+    "name": "Beast",
+    "color": "#E87D3E",
+    "description": "Power through rage and raw strength.",
+    "bonuses": {
+      "t1": {
+        "pieces": 3,
+        "description": "+15% damage when Rage >= 5 stacks",
+        "type": "beast_t1"
+      },
+      "t2": {
+        "pieces": 5,
+        "description": "Rage stacks no longer reset after attacking",
+        "type": "beast_t2"
+      }
+    }
+  },
+  {
+    "id": "rogue",
+    "name": "Rogue",
+    "color": "#5DBB63",
+    "description": "Strike fast and strike true.",
+    "bonuses": {
+      "t1": {
+        "pieces": 3,
+        "description": "+10% Crit Chance",
+        "type": "rogue_t1",
+        "stat_bonus": { "crit_chance": 0.10 }
+      },
+      "t2": {
+        "pieces": 5,
+        "description": "On crit: 35% chance to attack again immediately",
+        "type": "rogue_t2"
+      }
+    }
+  },
+  {
+    "id": "royal",
+    "name": "Royal",
+    "color": "#9B59B6",
+    "description": "Command poison and weaken your foes.",
+    "bonuses": {
+      "t1": {
+        "pieces": 3,
+        "description": "Each attack applies 1 Poison stack to the target",
+        "type": "royal_t1"
+      },
+      "t2": {
+        "pieces": 5,
+        "description": "Wound stacks applied to enemies are doubled",
+        "type": "royal_t2"
+      }
+    }
+  }
+]

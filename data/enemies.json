@@ -1,0 +1,69 @@
+[
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "hp": 22,
+    "damage": 8,
+    "armor": 0,
+    "is_boss": false,
+    "intents": [
+      { "type": "attack", "value": 8,  "label": "Bite" },
+      { "type": "attack", "value": 8,  "label": "Bite" },
+      { "type": "attack", "value": 12, "label": "Pounce" }
+    ]
+  },
+  {
+    "id": "spider",
+    "name": "Forest Spider",
+    "hp": 16,
+    "damage": 6,
+    "armor": 0,
+    "is_boss": false,
+    "intents": [
+      { "type": "attack",        "value": 6, "label": "Bite" },
+      { "type": "poison_attack", "value": 5, "label": "Venom Spit", "poison_stacks": 2 },
+      { "type": "attack",        "value": 6, "label": "Bite" }
+    ]
+  },
+  {
+    "id": "treant",
+    "name": "Treant",
+    "hp": 38,
+    "damage": 10,
+    "armor": 4,
+    "is_boss": false,
+    "intents": [
+      { "type": "attack", "value": 10, "label": "Slam" },
+      { "type": "defend", "value": 8,  "label": "Root Armor" },
+      { "type": "charge", "value": 20, "label": "Winding Up..." },
+      { "type": "attack", "value": 20, "label": "Crash!" }
+    ]
+  },
+  {
+    "id": "verdant_horror",
+    "name": "Verdant Horror",
+    "hp": 80,
+    "damage": 12,
+    "armor": 2,
+    "is_boss": true,
+    "phase2_hp_threshold": 0.5,
+    "intents": [
+      { "type": "attack", "value": 12, "label": "Vine Whip" },
+      { "type": "attack", "value": 12, "label": "Vine Whip" },
+      { "type": "summon", "value": 1,  "label": "Grow Sapling", "summon_id": "sapling" }
+    ]
+  },
+  {
+    "id": "sapling",
+    "name": "Sapling",
+    "hp": 15,
+    "damage": 6,
+    "armor": 0,
+    "is_boss": false,
+    "phase2_death_aoe": 8,
+    "intents": [
+      { "type": "attack", "value": 6, "label": "Scratch" },
+      { "type": "attack", "value": 6, "label": "Scratch" }
+    ]
+  }
+]

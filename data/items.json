@@ -1,0 +1,202 @@
+[
+  {
+    "id": "berserker_axe",
+    "name": "Berserker Axe",
+    "type": "weapon",
+    "shape": "slim",
+    "set_tag": "beast",
+    "base_stats": { "damage": 8 }
+  },
+  {
+    "id": "warbeast_helm",
+    "name": "Warbeast Helm",
+    "type": "helm",
+    "shape": "small",
+    "set_tag": "beast",
+    "base_stats": { "armor": 3, "hp_bonus": 10 }
+  },
+  {
+    "id": "spiked_vest",
+    "name": "Spiked Vest",
+    "type": "chest",
+    "shape": "small",
+    "set_tag": "beast",
+    "base_stats": { "hp_bonus": 20, "armor": 2 }
+  },
+  {
+    "id": "fury_ring",
+    "name": "Fury Ring",
+    "type": "ring",
+    "shape": "small",
+    "set_tag": "beast",
+    "base_stats": { "damage": 3 }
+  },
+  {
+    "id": "stomping_boots",
+    "name": "Stomping Boots",
+    "type": "boots",
+    "shape": "small",
+    "set_tag": "beast",
+    "base_stats": { "armor": 2, "hp_bonus": 8 }
+  },
+  {
+    "id": "shadow_dagger",
+    "name": "Shadow Dagger",
+    "type": "weapon",
+    "shape": "slim",
+    "set_tag": "rogue",
+    "base_stats": { "damage": 6, "crit_chance": 0.05 }
+  },
+  {
+    "id": "thiefs_hood",
+    "name": "Thief's Hood",
+    "type": "helm",
+    "shape": "small",
+    "set_tag": "rogue",
+    "base_stats": { "crit_chance": 0.06, "armor": 1 }
+  },
+  {
+    "id": "rogue_leathers",
+    "name": "Rogue Leathers",
+    "type": "chest",
+    "shape": "small",
+    "set_tag": "rogue",
+    "base_stats": { "armor": 3, "crit_chance": 0.04 }
+  },
+  {
+    "id": "lucky_ring",
+    "name": "Lucky Ring",
+    "type": "ring",
+    "shape": "small",
+    "set_tag": "rogue",
+    "base_stats": { "crit_chance": 0.07 }
+  },
+  {
+    "id": "silent_steps",
+    "name": "Silent Steps",
+    "type": "boots",
+    "shape": "small",
+    "set_tag": "rogue",
+    "base_stats": { "swiftness": 0.08, "armor": 1 }
+  },
+  {
+    "id": "venom_blade",
+    "name": "Venom Blade",
+    "type": "weapon",
+    "shape": "slim",
+    "set_tag": "royal",
+    "base_stats": { "damage": 5, "crit_chance": 0.03 }
+  },
+  {
+    "id": "noble_crown",
+    "name": "Noble Crown",
+    "type": "helm",
+    "shape": "small",
+    "set_tag": "royal",
+    "base_stats": { "hp_bonus": 15, "armor": 2 }
+  },
+  {
+    "id": "royal_robe",
+    "name": "Royal Robe",
+    "type": "chest",
+    "shape": "small",
+    "set_tag": "royal",
+    "base_stats": { "hp_bonus": 25, "barrier": 10 }
+  },
+  {
+    "id": "signet_ring",
+    "name": "Signet Ring",
+    "type": "ring",
+    "shape": "small",
+    "set_tag": "royal",
+    "base_stats": { "hp_bonus": 8, "armor": 1 }
+  },
+  {
+    "id": "court_slippers",
+    "name": "Court Slippers",
+    "type": "boots",
+    "shape": "small",
+    "set_tag": "royal",
+    "base_stats": { "armor": 2, "barrier": 5 }
+  },
+  {
+    "id": "rusty_sword",
+    "name": "Rusty Sword",
+    "type": "weapon",
+    "shape": "slim",
+    "set_tag": "",
+    "base_stats": { "damage": 6 }
+  },
+  {
+    "id": "iron_longsword",
+    "name": "Iron Longsword",
+    "type": "weapon",
+    "shape": "slim",
+    "set_tag": "",
+    "base_stats": { "damage": 7 }
+  },
+  {
+    "id": "war_axe",
+    "name": "War Axe",
+    "type": "weapon",
+    "shape": "slim",
+    "set_tag": "",
+    "base_stats": { "damage": 9 }
+  },
+  {
+    "id": "iron_helm",
+    "name": "Iron Helm",
+    "type": "helm",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "armor": 4 }
+  },
+  {
+    "id": "leather_cap",
+    "name": "Leather Cap",
+    "type": "helm",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "armor": 2, "hp_bonus": 10 }
+  },
+  {
+    "id": "chain_mail",
+    "name": "Chain Mail",
+    "type": "chest",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "armor": 6 }
+  },
+  {
+    "id": "padded_armor",
+    "name": "Padded Armor",
+    "type": "chest",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "hp_bonus": 25, "armor": 3 }
+  },
+  {
+    "id": "travel_boots",
+    "name": "Travel Boots",
+    "type": "boots",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "hp_bonus": 12 }
+  },
+  {
+    "id": "iron_greaves",
+    "name": "Iron Greaves",
+    "type": "boots",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "armor": 3 }
+  },
+  {
+    "id": "plain_ring",
+    "name": "Plain Ring",
+    "type": "ring",
+    "shape": "small",
+    "set_tag": "",
+    "base_stats": { "hp_bonus": 15 }
+  }
+]

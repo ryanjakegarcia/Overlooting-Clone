@@ -1,0 +1,48 @@
+{
+  "tier1": [
+    {
+      "id": "resilience",
+      "name": "Resilience",
+      "description": "+20 Max HP",
+      "icon": "hp",
+      "effect": { "type": "stat", "stat": "max_hp", "value": 20.0 }
+    },
+    {
+      "id": "sharpened_edge",
+      "name": "Sharpened Edge",
+      "description": "+3 Damage",
+      "icon": "damage",
+      "effect": { "type": "stat", "stat": "damage", "value": 3.0 }
+    },
+    {
+      "id": "eagle_eye",
+      "name": "Eagle Eye",
+      "description": "+10% Crit Chance",
+      "icon": "crit",
+      "effect": { "type": "stat", "stat": "crit_chance", "value": 0.10 }
+    }
+  ],
+  "tier2": [
+    {
+      "id": "iron_skin",
+      "name": "Iron Skin",
+      "description": "+15 Armor",
+      "icon": "armor",
+      "effect": { "type": "stat", "stat": "armor", "value": 15.0 }
+    },
+    {
+      "id": "blood_frenzy",
+      "name": "Blood Frenzy",
+      "description": "On kill: gain 2 Rage stacks",
+      "icon": "rage",
+      "effect": { "type": "on_kill", "effect": "rage", "value": 2 }
+    },
+    {
+      "id": "stalwart",
+      "name": "Stalwart",
+      "description": "Defend action grants +10 extra Barrier",
+      "icon": "barrier",
+      "effect": { "type": "defend_bonus", "stat": "barrier", "value": 10.0 }
+    }
+  ]
+}

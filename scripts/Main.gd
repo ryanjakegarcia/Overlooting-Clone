@@ -15,6 +15,7 @@ const _BrokerOverlay  = preload("res://scripts/ui/BrokerOverlay.gd")
 const _Enemy          = preload("res://scripts/core/Enemy.gd")
 const _CombatEngine   = preload("res://scripts/core/CombatEngine.gd")
 const _CombatUI       = preload("res://scripts/ui/CombatUI.gd")
+const _BiomeMap       = preload("res://scripts/ui/BiomeMap.gd")
 
 var _state        = null   # RunState
 var _item_defs: Array = []
@@ -39,6 +40,7 @@ var _forge_pending_group: Array = []
 var _forge_btn: Button = null
 var _forge_cancel_btn: Button = null
 var _forge_dialog: ConfirmationDialog = null
+var _biome_map = null  # BiomeMap
 
 # ── Lifecycle ──────────────────────────────────────────────────────────────────
 
@@ -195,10 +197,19 @@ func _build_stats_col() -> VBoxContainer:
 
 func _build_controls_col() -> VBoxContainer:
 	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 8)
+	col.add_theme_constant_override("separation", 6)
 	col.custom_minimum_size = Vector2(200, 0)
-	col.add_child(_section_lbl("TEST CONTROLS"))
 
+	# ── Biome map (primary gameplay) ──
+	col.add_child(_section_lbl("BIOME MAP"))
+	_biome_map = _BiomeMap.new()
+	_biome_map.area_entered.connect(_on_area_entered)
+	_biome_map.setup(_state.areas_cleared)
+	col.add_child(_biome_map)
+
+	col.add_child(HSeparator.new())
+
+	# ── Chest / Forge ──
 	var b0 := _btn("Open Chest (depth 1)")
 	b0.pressed.connect(func() -> void: _open_chest(1))
 	col.add_child(b0)
@@ -215,55 +226,50 @@ func _build_controls_col() -> VBoxContainer:
 
 	col.add_child(HSeparator.new())
 
-	var b1 := _btn("Add Small Item (1×1)")
-	b1.pressed.connect(func() -> void: _add_item("small"))
-	col.add_child(b1)
+	# ── Debug / test item spawning — scrollable so it never covers above ──
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	col.add_child(scroll)
 
-	var b2 := _btn("Add Weapon (1×2 slim)")
+	var dbg := VBoxContainer.new()
+	dbg.add_theme_constant_override("separation", 6)
+	dbg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(dbg)
+
+	dbg.add_child(_section_lbl("DEBUG"))
+
+	var b1 := _btn("Add Small Item")
+	b1.pressed.connect(func() -> void: _add_item("small"))
+	dbg.add_child(b1)
+
+	var b2 := _btn("Add Weapon")
 	b2.pressed.connect(func() -> void: _add_item("slim"))
-	col.add_child(b2)
+	dbg.add_child(b2)
 
 	var b3 := _btn("Add Rare Item")
 	b3.pressed.connect(func() -> void: _add_item("small", 3))
-	col.add_child(b3)
+	dbg.add_child(b3)
 
 	var b4 := _btn("Add Epic Item")
 	b4.pressed.connect(func() -> void: _add_item("small", 4))
-	col.add_child(b4)
-
-	col.add_child(HSeparator.new())
+	dbg.add_child(b4)
 
 	var b5 := _btn("Add Beast Set Piece")
 	b5.pressed.connect(func() -> void: _add_set_item("beast"))
-	col.add_child(b5)
+	dbg.add_child(b5)
 
 	var b6 := _btn("Add Rogue Set Piece")
 	b6.pressed.connect(func() -> void: _add_set_item("rogue"))
-	col.add_child(b6)
+	dbg.add_child(b6)
 
 	var b7 := _btn("Add Royal Set Piece")
 	b7.pressed.connect(func() -> void: _add_set_item("royal"))
-	col.add_child(b7)
-
-	col.add_child(HSeparator.new())
+	dbg.add_child(b7)
 
 	var b8 := _btn("Clear Backpack")
 	b8.pressed.connect(_clear_backpack)
-	col.add_child(b8)
-
-	col.add_child(HSeparator.new())
-
-	var bc1 := _btn("Fight: Wolf")
-	bc1.pressed.connect(func() -> void: _start_combat(["wolf"]))
-	col.add_child(bc1)
-
-	var bc2 := _btn("Fight: Wolf + Spider")
-	bc2.pressed.connect(func() -> void: _start_combat(["wolf", "spider"]))
-	col.add_child(bc2)
-
-	var bc3 := _btn("Fight: Treant")
-	bc3.pressed.connect(func() -> void: _start_combat(["treant"]))
-	col.add_child(bc3)
+	dbg.add_child(b8)
 
 	return col
 
@@ -400,6 +406,7 @@ func _open_chest(depth: int = 1) -> void:
 	if items.is_empty():
 		return
 	_chest_ui.open(items)
+	await _chest_ui.closed
 
 func _start_combat(enemy_ids: Array) -> void:
 	# Seed potions for test if empty
@@ -428,7 +435,38 @@ func _on_combat_won() -> void:
 	await get_tree().create_timer(0.8).timeout
 	_combat_ui.close()
 	_show_toast("Victory!")
-	_open_chest(maxi(1, _state.areas_cleared))
+	await _open_chest(maxi(1, _state.areas_cleared))
+	if _state.areas_cleared == 2 or _state.areas_cleared == 4:
+		_show_toast("Skill tree available! (coming in Layer 9)")
+	if _state.areas_cleared >= 5:
+		_show_toast("Run complete — Verdant Horror defeated!")
+		if _biome_map != null:
+			_biome_map.refresh(_state.areas_cleared)
+		return
+	# Barrier refresh + poison clear between areas
+	_state.hero_stats.poison_stacks = 0
+	_state.hero_stats.refresh_barrier_on_area_enter()
+	if _biome_map != null:
+		_biome_map.refresh(_state.areas_cleared)
+
+func _enemies_for_area(area_idx: int) -> Array:
+	if area_idx == 4:
+		return ["verdant_horror"]
+	var pool := ["wolf", "wolf", "wolf", "wolf", "wolf",
+				 "spider", "spider", "spider",
+				 "treant", "treant"]
+	var count := 1
+	match area_idx:
+		1: count = randi_range(1, 2)
+		2: count = 2
+		3: count = randi_range(2, 3)
+	var ids: Array = []
+	for _i in range(count):
+		ids.append(pool[randi() % pool.size()])
+	return ids
+
+func _on_area_entered(area_idx: int) -> void:
+	_start_combat(_enemies_for_area(area_idx))
 
 func _on_combat_lost() -> void:
 	await get_tree().create_timer(1.0).timeout

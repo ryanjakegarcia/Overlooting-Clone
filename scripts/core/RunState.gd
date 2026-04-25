@@ -61,14 +61,15 @@ func get_free_cell_count() -> int:
 	return count
 
 # item: Item instance (untyped)
-func can_place_item(item, col: int, row: int) -> bool:
+func can_place_item(item, col: int, row: int, ignore_item = null) -> bool:
 	for raw in item.get_shape_cells():
 		var offset: Vector2i = raw
 		var tc := col + offset.x
 		var tr := row + offset.y
 		if tc < 0 or tc >= GRID_COLS or tr < 0 or tr >= GRID_ROWS:
 			return false
-		if backpack[tc][tr] != null:
+		var occupying = backpack[tc][tr]
+		if occupying != null and occupying != ignore_item:
 			return false
 	return true
 

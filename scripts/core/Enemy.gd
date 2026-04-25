@@ -28,7 +28,7 @@ var armor: float = 0.0
 var is_boss: bool = false
 
 # Loaded from JSON — cycled in order, wraps around
-var intent_pool: Array[Intent] = []
+var intent_pool: Array = []
 var intent_index: int = 0
 var current_intent: Intent = null
 
@@ -45,19 +45,18 @@ var phase2_hp_threshold: float = 0.0  # 0 = no phase 2
 var in_phase2: bool = false
 var phase2_death_aoe: int = 0         # damage dealt to hero on death (sapling)
 
-signal died(enemy: Enemy)
+signal died(enemy)
 
-static func from_definition(def: Dictionary) -> Enemy:
-	var e := Enemy.new()
-	e.id = def.get("id", "")
-	e.display_name = def.get("name", "Enemy")
-	e.max_hp = float(def.get("hp", 20))
-	e.hp = e.max_hp
-	e.base_damage = float(def.get("damage", 8))
-	e.armor = float(def.get("armor", 0))
-	e.is_boss = def.get("is_boss", false)
-	e.phase2_hp_threshold = float(def.get("phase2_hp_threshold", 0.0))
-	e.phase2_death_aoe = int(def.get("phase2_death_aoe", 0))
+func init_from_definition(def: Dictionary) -> void:
+	id           = def.get("id", "")
+	display_name = def.get("name", "Enemy")
+	max_hp       = float(def.get("hp", 20))
+	hp           = max_hp
+	base_damage  = float(def.get("damage", 8))
+	armor        = float(def.get("armor", 0))
+	is_boss      = def.get("is_boss", false)
+	phase2_hp_threshold = float(def.get("phase2_hp_threshold", 0.0))
+	phase2_death_aoe    = int(def.get("phase2_death_aoe", 0))
 
 	for entry in def.get("intents", []):
 		var type_str: String = entry.get("type", "attack")
@@ -69,13 +68,12 @@ static func from_definition(def: Dictionary) -> Enemy:
 			"poison_attack": t = IntentType.POISON_ATTACK
 			"summon":        t = IntentType.SUMMON
 			_:               t = IntentType.ATTACK
-		var intent := Intent.new(t, int(entry.get("value", e.base_damage)), entry.get("label", ""))
+		var intent := Intent.new(t, int(entry.get("value", base_damage)), entry.get("label", ""))
 		intent.poison_stacks = int(entry.get("poison_stacks", 0))
 		intent.summon_id = entry.get("summon_id", "")
-		e.intent_pool.append(intent)
+		intent_pool.append(intent)
 
-	e.advance_intent()
-	return e
+	advance_intent()
 
 func advance_intent() -> void:
 	if intent_pool.is_empty():

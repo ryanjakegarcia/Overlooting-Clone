@@ -19,6 +19,7 @@ var swiftness: float   = 0.0
 
 # In-combat trackers
 var rage_stacks: int = 0
+var poison_stacks: int = 0
 
 # Active set bonus flags (set by Main/_refresh_set_bonuses)
 var beast_t1: bool = false
@@ -45,6 +46,7 @@ func reset_to_base() -> void:
 	crit_chance = base_crit_chance
 	swiftness   = 0.0
 	rage_stacks = 0
+	poison_stacks = 0
 	beast_t1 = false; beast_t2 = false
 	rogue_t1 = false; rogue_t2 = false
 	royal_t1 = false; royal_t2 = false
@@ -71,6 +73,14 @@ func remove_item(item) -> void:
 	crit_chance -= item.crit_chance
 	swiftness   -= item.swiftness
 	changed.emit()
+
+func take_hit_piercing(raw_damage: float) -> float:
+	var absorbed := minf(barrier, raw_damage)
+	barrier -= absorbed
+	var remaining := maxf(0.0, raw_damage - absorbed)
+	hp = maxf(0.0, hp - remaining)
+	changed.emit()
+	return absorbed + remaining
 
 func take_hit(raw_damage: float) -> float:
 	var absorbed := minf(barrier, raw_damage)
